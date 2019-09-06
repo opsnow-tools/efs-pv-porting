@@ -8,7 +8,7 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:],"eih", ["help"])
+        opts, args = getopt.getopt(sys.argv[1:],"he:i", ["help"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
