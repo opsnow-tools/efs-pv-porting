@@ -15,9 +15,9 @@ def main():
         sys.exit(1)
 
 
-    for opt,arg in opts:
+    for opt,args in opts:
         if ( opt == "-e" ) or ( opt == "--export" ):
-            print("export directory = "+arg)
+            print("export directory = "+args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV...")
         elif ( opt == "-h" ) or ( opt == "--help" ):
