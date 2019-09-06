@@ -19,7 +19,7 @@ def main():
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
-            print("Importing PV...")
+            print("Importing PV... "+args)
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
 
