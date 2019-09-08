@@ -38,7 +38,7 @@ def export(args):
 
         if 'Available' in cmd_status:
             continue
-        else:
+        elif 'Bound' in cmd_status:
             # pv_name is a base of yaml file.
             # claimRef name use for making file name
             pvNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].metadata.name'"
@@ -47,6 +47,8 @@ def export(args):
             export_pv_yaml(p2.stdout.read())
             fileNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].spec.claimRef.name'"
             p3 = Popen(fileNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+        else:
+            break
         cnt+=1
 
 def main():
