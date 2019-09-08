@@ -35,6 +35,7 @@ def export(args):
         if not cmd_status:
             break
         cmd_status = cmd_status.encode('ascii')
+        print(cmd_status)
 
         if 'Available' in cmd_status:
             continue
