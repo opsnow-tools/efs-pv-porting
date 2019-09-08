@@ -34,7 +34,7 @@ def export(args):
         cmd_status = p1.stdout.readline()
         if not cmd_status:
             break
-        cmd_status = cmd_status.encode('ascii')
+        cmd_status = cmd_status.encode('ascii').replace('"','')
 
         if 'Available' == cmd_status:
             continue
