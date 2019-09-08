@@ -36,9 +36,9 @@ def export(args):
             break
         cmd_status = cmd_status.encode('ascii')
 
-        if 'Available' in cmd_status:
+        if 'Available' == cmd_status:
             continue
-        elif 'Bound' in cmd_status:
+        elif 'Bound' == cmd_status:
             # pv_name is a base of yaml file.
             # claimRef name use for making file name
             pvNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].metadata.name'"
