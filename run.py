@@ -24,7 +24,7 @@ def export(args):
 
     # export PVs to yaml files
 
-    statusCmd="kubectl get pv -ojson | jq '.items[].status'"
+    statusCmd="kubectl get pv -ojson | jq '.items[].status.phase'"
     p1 = Popen(statusCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
     #parsing_pv, parsing_file = [], []
