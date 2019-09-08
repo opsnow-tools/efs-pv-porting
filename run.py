@@ -35,7 +35,6 @@ def export(args):
         if not cmd_status:
             break
         cmd_status = cmd_status.encode('ascii')
-        print(cmd_status)
 
         if 'Available' in cmd_status:
             continue
@@ -48,8 +47,8 @@ def export(args):
             export_pv_yaml(p2.stdout.read())
             fileNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].spec.claimRef.name'"
             p3 = Popen(fileNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-        #else:
-        #    break
+        else:
+            break
         cnt+=1
 
 def main():
