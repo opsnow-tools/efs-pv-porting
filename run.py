@@ -115,7 +115,7 @@ def main():
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV... "+args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
-            return
+            switch_context(arg_file_1, arg_file_2)
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
