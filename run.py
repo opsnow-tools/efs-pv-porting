@@ -14,7 +14,7 @@ def mod_file(args):
     with open("test/"+args+".yaml",'r+t') as f:
         for lines in f:
             if 'uid' in lines:
-                lines.writelines('')
+                lines.write('')
     return
 
 
