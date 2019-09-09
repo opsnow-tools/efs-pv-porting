@@ -94,11 +94,9 @@ def import_pv():
 def switch_context(arg_file_1, arg_file_2):
     config_file_1 = yaml.load(open(arg_file_1, 'r'))
     example = doc['apiVersion']
-
+    print('here')
     for ex in example:
-        print(ex)
-    return
-            
+        print(ex)            
 
 def main():
     try:
