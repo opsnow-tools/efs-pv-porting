@@ -18,7 +18,7 @@ def mod_file(args):
             # if not 'uid' in lines:
             #     print('here')
             #     output.append(lines)
-            if ('status' in lines) and ('uid' in lines):
+            if ('status' in lines) or ('uid' in lines):
                 continue
             print('here lines = ' + lines)
                 #output.append(lines)
