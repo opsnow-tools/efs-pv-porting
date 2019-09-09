@@ -94,9 +94,8 @@ def import_pv():
 def switch_context(arg_dir):
     if os.path.exists(arg_dir):
         file_names = os.listdir(arg_dir)
-        for name in file_names:
-            file_name = os.path.join(arg_dir, name)
-            config_file = yaml.load(open(file_name, 'r'))
+        for file_name in file_names:
+            config_file = yaml.load(file_name)
             example = config_file['apiVersion']
             for ex in example:
                 print(ex) 
