@@ -18,10 +18,10 @@ def mod_file(args):
             # if not 'uid' in lines:
             #     print('here')
             #     output.append(lines)
-            if ('status' in lines) or ('uid' in lines):
+            if ('status' in lines) or ('uid' in lines) or ('creationTimestamp' in lines) or ('selfLink' in lines) or ('phase' in lines):
                 continue
             print('here lines = ' + lines)
-                #output.append(lines)
+            output.append(lines)
             
     f=open(file_name,'w')
     f.writelines(output)
