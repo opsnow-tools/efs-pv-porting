@@ -106,7 +106,7 @@ def switch_context(arg_dir):
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hse:i:", ["help"])
+        opts, args = getopt.getopt(sys.argv[1:], "hs:e:i:", ["help"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
