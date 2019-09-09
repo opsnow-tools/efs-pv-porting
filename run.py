@@ -5,6 +5,7 @@ import sys
 import getopt
 from subprocess import Popen, PIPE, STDOUT
 import subprocess
+import yaml
 
 def help():
     print("print help usage")
@@ -90,7 +91,12 @@ def import_pv():
             p6 = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             p6.stdout.read()
 
-def switch_context():
+def switch_context(arg_file_1, arg_file_2):
+    config_file_1 = yaml.load(open(arg_file_1, 'r'))
+    example = doc['apiVersion']
+
+    for ex in example:
+        print(ex)
     return
             
 
