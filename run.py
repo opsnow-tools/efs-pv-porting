@@ -15,17 +15,20 @@ def mod_file(args):
     output = []
     with open(file_name,'r+t') as f:
         for lines in f:
+            print(lines)
             if not 'uid' in lines:
+                print('here')
                 output.append(lines)
-            #elif not 'status' in lines:
-            #    output.append(lines)
+            elif not 'status' in lines:
+                print('here status')
+                output.append(lines)
             
     f=open(file_name,'w')
     f.writelines(output)
     f.close()
 
 def export_pv_yaml(arg_pv, arg_file):
-    print("args = "+arg_pv.replace('\n','').replace('"',''))
+    # print("args = "+arg_pv.replace('\n','').replace('"',''))
     
     arg_pv=arg_pv.replace('\n','').replace('"','')
     arg_file=arg_file.replace('\n','').replace('"','')
