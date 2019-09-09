@@ -13,6 +13,7 @@ def help():
 def mod_file(args):
     with open("test/"+args+".yaml",'r+t') as f:
         for lines in f:
+            print(lines)
             if 'uid' in lines:
                 lines.write('')
     return
@@ -24,9 +25,11 @@ def export_pv_yaml(arg_pv, arg_file):
     arg_pv=arg_pv.replace('\n','').replace('"','')
     arg_file=arg_file.replace('\n','').replace('"','')
 
-    genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > ./test/"+arg_file+".yaml"
-    Popen(genFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-
+    # genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > ./test/"+arg_file+".yaml"
+    f=open("test/"+arg_file+".yaml", 'w')
+    out=subprocess.check_output("kubectl get pv -oyaml "+arg_pv, shell=True, encoding='utf-8')
+    f.write(out)
+    f.close()
     mod_file(arg_file)
     return
 
