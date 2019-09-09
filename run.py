@@ -29,7 +29,7 @@ def export_pv_yaml(arg_pv, arg_file):
 
     # genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > ./test/"+arg_file+".yaml"
     f=open("test/"+arg_file+".yaml", 'w')
-    out=subprocess.check_output("kubectl get pv -oyaml "+arg_pv, shell=True, encoding='utf-8')
+    out=subprocess.check_output("kubectl get pv -oyaml "+arg_pv, shell=True)
     f.write(out)
     f.close()
     mod_file(arg_file)
