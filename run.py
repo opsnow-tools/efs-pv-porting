@@ -15,12 +15,9 @@ def export_pv_yaml(arg_pv, arg_file):
     
     arg_pv=arg_pv.replace('\n','').replace('"','')
     arg_file=arg_file.replace('\n','').replace('"','')
-    
-    genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > ./test/"+arg_file+".yaml"
-    print(genFileCmd)
-    p4 = Popen(genFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
-    p4.stdout.read()
+    genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > ./test/"+arg_file+".yaml"
+    p4 = Popen(genFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     return
 
 def export(args):
