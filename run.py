@@ -20,7 +20,6 @@ def mod_file(args):
             #     output.append(lines)
             if ('status' in lines) or ('uid' in lines) or ('creationTimestamp' in lines) or ('selfLink' in lines) or ('phase' in lines):
                 continue
-            print('here lines = ' + lines)
             output.append(lines)
             
     f=open(file_name,'w')
@@ -40,7 +39,7 @@ def export_pv_yaml(arg_pv, arg_file):
     f.close()
     mod_file(arg_file)
 
-def export(args):
+def export_pv(args):
     # check directory & make directory
     if os.path.exists(args):
         print("Temp directory already exists")
@@ -58,11 +57,10 @@ def export(args):
     cnt = 0
     while True:
         cmd_status = p1.stdout.readline()
+        cmd_status = cmd_status.encode('ascii').replace('\n','').replace('"','')
         if not cmd_status:
             break
-        cmd_status = cmd_status.encode('ascii').replace('\n','').replace('"','')
-
-        if 'Available' == cmd_status:
+        elif 'Available' == cmd_status:
             cnt+=1
             continue
         elif 'Bound' == cmd_status:
@@ -78,11 +76,27 @@ def export(args):
             cnt+=1
         else:
             break
-        
+
+def import_pv():
+    findGenFileCmd = "ls -al test | awk '{print $9}' | sed '1,3d'"
+    p5 = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    while True:
+        genFileName = p5.stdout.readline()
+        genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
+        if not genFileName:
+            break
+        else:
+            applyPvCmd = "kubectl apply -f "+genFileName
+            p6 = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            p6.stdout.read()
+
+def switch_context():
+    return
+            
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "he:i:", ["help"])
+        opts, args = getopt.getopt(sys.argv[1:], "hse:i:", ["help"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
@@ -91,9 +105,11 @@ def main():
     for opt,args in opts:
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+args)
-            export(args)
+            export_pv(args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV... "+args)
+        elif ( opt == "-s" ) or ( opt == "--switch" ):
+            return
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
