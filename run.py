@@ -11,7 +11,7 @@ def help():
     return
     
 def mod_file(args):
-    with open("./test/"+args+".yaml",'r+t') as f:
+    with open("test/"+args+".yaml",'r+t') as f:
         for lines in f:
             if 'uid' in lines:
                 lines.writelines('')
