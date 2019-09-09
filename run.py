@@ -98,10 +98,11 @@ def switch_context(arg_dir):
             f = open(arg_dir + "/"+ file_name)
             dataMap = yaml.safe_load(f)
             f.close()
-            print(dataMap)
+            print("output = "+dataMap+"\n")
             example = dataMap['apiVersion']
-            for ex in example:
-                print(ex) 
+            print("output = "+example)
+            #for ex in example:
+            #    print(ex)
     else:
         os.mkdir(arg_dir)
         print("One more time")   
