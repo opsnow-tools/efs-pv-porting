@@ -10,8 +10,12 @@ def help():
     print("print help usage")
     return
     
-def export_pv_yaml(args):
-    print("args = "+args.replace('\n',''))
+def export_pv_yaml(arg_pv, arg_file):
+    print("args = "+arg_pv.replace('\n','').replace('"',''))
+    genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > "+arg_file+".yaml"
+    p4 = Popen(genFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+
+    p4.stdout.read()
     return
 
 def export(args):
@@ -45,10 +49,10 @@ def export(args):
             pvNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].metadata.name'"
             p2 = Popen(pvNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
-            export_pv_yaml(p2.stdout.read())
             fileNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].spec.claimRef.name'"
             p3 = Popen(fileNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-            
+
+            export_pv_yaml(p2.stdout.read(), p3.stdout.read())
             cnt+=1
         else:
             break
