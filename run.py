@@ -98,9 +98,8 @@ def switch_context(arg_dir):
             f = open(arg_dir + "/"+ file_name)
             dataMap = yaml.safe_load(f)
             f.close()
-            print("output = ",dataMap,"\n")
-            example = dataMap['apiVersion']
-            print("output = "+example)
+            
+            
             #for ex in example:
             #    print(ex)
     else:
