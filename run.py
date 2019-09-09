@@ -13,6 +13,7 @@ def help():
 def export_pv_yaml(arg_pv, arg_file):
     print("args = "+arg_pv.replace('\n','').replace('"',''))
     genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > "+arg_file+".yaml"
+    print(genFileCmd)
     p4 = Popen(genFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
     p4.stdout.read()
