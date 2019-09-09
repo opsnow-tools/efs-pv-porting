@@ -95,7 +95,7 @@ def switch_context(arg_dir):
     if os.path.exists(arg_dir):
         file_names = os.listdir(arg_dir)
         for file_name in file_names:
-            f = open(file_name)
+            f = open(arg_dir + "/"+ file_name)
             dataMap = yaml.safe_load(f)
             f.close()
             print(dataMap)
