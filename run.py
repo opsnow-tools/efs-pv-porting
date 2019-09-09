@@ -97,9 +97,10 @@ def switch_context(arg_dir):
         for file_name in file_names:
             f = open(arg_dir + "/"+ file_name)
             dataMap = yaml.safe_load(f)
+            print(dataMap)
             f.close()
             
-            
+
             #for ex in example:
             #    print(ex)
     else:
