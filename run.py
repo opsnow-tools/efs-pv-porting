@@ -15,12 +15,13 @@ def mod_file(args):
     output = []
     with open(file_name,'r+t') as f:
         for lines in f:
-            print('here lines = ' + lines)
             # if not 'uid' in lines:
             #     print('here')
             #     output.append(lines)
-            if not 'status' in lines:
-                output.append(lines)
+            if ('status' in lines) and ('uid' in lines):
+                continue
+            print('here lines = ' + lines)
+                #output.append(lines)
             
     f=open(file_name,'w')
     f.writelines(output)
