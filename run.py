@@ -15,8 +15,9 @@ def mod_file(args):
     output = []
     with open(file_name,'r+t') as f:
         for lines in f:
-            if not 'uid' in lines:
+            if not 'uid' and 'status' in lines:
                 output.append(lines)
+            
     f=open(file_name,'w')
     f.writelines(output)
     f.close()
