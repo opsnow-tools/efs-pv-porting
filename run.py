@@ -11,13 +11,15 @@ def help():
     return
     
 def mod_file(args):
-    with open("test/"+args+".yaml",'r+t') as f:
+    file_name="test/"+args+".yaml"
+    output = []
+    with open(file_name,'r+t') as f:
         for lines in f:
-            print(lines)
-            if 'uid' in lines:
-                lines.write('')
-    return
-
+            if not 'uid' in lines:
+                output.append(lines)
+    f=open(file_name,'w')
+    f.writelines(output)
+    f.close()
 
 def export_pv_yaml(arg_pv, arg_file):
     print("args = "+arg_pv.replace('\n','').replace('"',''))
@@ -31,7 +33,6 @@ def export_pv_yaml(arg_pv, arg_file):
     f.write(out)
     f.close()
     mod_file(arg_file)
-    return
 
 def export(args):
     # check directory & make directory
