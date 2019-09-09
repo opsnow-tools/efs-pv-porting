@@ -93,11 +93,13 @@ def import_pv():
 
 def switch_context(arg_dir):
     if os.path.exists(arg_dir):
-        config_file = yaml.load(open(arg_dir, 'r'))
-        example = config_file['apiVersion']
-        print('here')
-        for ex in example:
-            print(ex) 
+        file_names = os.listdir(arg_dir)
+        for name in file_names:
+            file_name = os.path.join(arg_dir, name)
+            config_file = yaml.load(open(file_name, 'r'))
+            example = config_file['apiVersion']
+            for ex in example:
+                print(ex) 
     else:
         os.mkdir(arg_dir)
         print("One more time")   
