@@ -91,12 +91,16 @@ def import_pv():
             p6 = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             p6.stdout.read()
 
-def switch_context(arg_file_1, arg_file_2):
-    config_file_1 = yaml.load(open(arg_file_1, 'r'))
-    example = doc['apiVersion']
-    print('here')
-    for ex in example:
-        print(ex)            
+def switch_context(arg_dir):
+    if os.path.exists(arg_dir):
+        config_file = yaml.load(open(arg_dir, 'r'))
+        example = config_file['apiVersion']
+        print('here')
+        for ex in example:
+            print(ex) 
+    else:
+        os.mkdir(arg_dir)
+        print("One more time")   
 
 def main():
     try:
@@ -113,7 +117,7 @@ def main():
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV... "+args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
-            switch_context(arg_file_1, arg_file_2)
+            switch_context(args)
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
