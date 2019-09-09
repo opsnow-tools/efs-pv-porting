@@ -15,7 +15,7 @@ def mod_file(args):
     output = []
     with open(file_name,'r+t') as f:
         for lines in f:
-            print(lines)
+            print('here lines = ' + lines)
             # if not 'uid' in lines:
             #     print('here')
             #     output.append(lines)
