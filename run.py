@@ -16,9 +16,9 @@ def mod_file(args):
     with open(file_name,'r+t') as f:
         for lines in f:
             print(lines)
-            if not 'uid' in lines:
-                print('here')
-                output.append(lines)
+            # if not 'uid' in lines:
+            #     print('here')
+            #     output.append(lines)
             # elif not 'status' in lines:
             #     print('here status')
             #     output.append(lines)
