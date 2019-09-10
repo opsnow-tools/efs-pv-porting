@@ -11,6 +11,7 @@ from os.path import expanduser
 
 home=expanduser('~')
 
+
 def help():
     print("print help usage")
     return
@@ -95,42 +96,52 @@ def import_pv():
             p6 = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             p6.stdout.read()
 
-def init_context(arg_dir):
-    clusters, contexts, users = [], [], []
-    new_config = {}
+def check_dir(arg_dir):
     if os.path.exists(arg_dir):
-        os.remove('key/new-kube-config.yaml')
-        file_names = os.listdir(arg_dir)
-        for file_name in file_names:
-            f = open(arg_dir + "/"+ file_name)
-            dataMap = yaml.safe_load(f)
-            clusters.append(dataMap['clusters'][0])
-            contexts.append(dataMap['contexts'][0])
-            users.append(dataMap['users'][0])
-            current_ctx = dataMap['current-context']
-            f.close()
-        print(clusters)
-        print("==================================================================\n")
-        print(contexts)
-        print("==================================================================\n")
-        print(users)
-        print("==================================================================\n")
-        new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
-                'clusters': clusters, 'contexts': contexts, 'users': users}
-        
-        with open('key/new-kube-config.yaml','w') as yaml_file:
-            yaml.dump(new_config, yaml_file, default_flow_style=False)
-        shutil.copy2('key/new-kube-config.yaml',home+'/.kube/config')
-
-                
-
-            #for ex in example:
-            #    print(ex)
+        pass
     else:
         os.mkdir(arg_dir)
-        print("One more time")
 
-def switch_context(args):
+def init_context(args):
+    # declare variables
+    clusters, contexts, users = [], [], []
+    new_config = {}
+    new_config_file = 'key/new-kube-config.yaml'
+    arg_dir = 'key'
+
+    check_dir(arg_dir)
+    print(args)
+   
+    # if os.path.exists(new_config_file):
+    #     os.remove(new_config_file)
+    # else:
+    #     pass
+
+    # file_names = os.listdir(arg_dir)
+    # for file_name in file_names:
+    #     f = open(arg_dir + "/"+ file_name)
+    #     dataMap = yaml.safe_load(f)
+    #     clusters.append(dataMap['clusters'][0])
+    #     contexts.append(dataMap['contexts'][0])
+    #     users.append(dataMap['users'][0])
+    #     current_ctx = dataMap['current-context']
+    #     f.close()
+    # print(clusters)
+    # print("==================================================================\n")
+    # print(contexts)
+    # print("==================================================================\n")
+    # print(users)
+    # print("==================================================================\n")
+    # new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
+    #         'clusters': clusters, 'contexts': contexts, 'users': users}
+    
+    # with open('key/new-kube-config.yaml','w') as yaml_file:
+    #     yaml.dump(new_config, yaml_file, default_flow_style=False)
+    # shutil.copy2('key/new-kube-config.yaml',home+'/.kube/config')
+
+    
+def switch_context():
+
     return
 
 def main():
@@ -148,9 +159,9 @@ def main():
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV... "+args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
-            switch_context(args)
+            switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
-            init_context(args)
+            init_context(args)            
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
