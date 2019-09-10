@@ -11,21 +11,19 @@ from os.path import expanduser
 
 def help():
     print('''
-    -----------------------------------------
-    |            efs-pv-porting             |
-    -----------------------------------------
-    Available OPTIONS:
-        -e / --export       Exporting PV in old cluster
-                            ex) ./run.py -e export_file   // ./run.py --export export_file
-        -i / --import       Importing PV in new cluster
-        -t / --init         Initializing Kubeconfig file. Must place with cluster directory. And It can find right place of .output directoires
-                            ex) ./run.py -t key  // ./run.py --init key
-        -s / --switch       Switching context cluster
-        -h / --help         help
-    Usage: ./run.py [OPTIONS] [ARGS]
-    ''')
-    print("-t / --init option : Must place in cluster directory. And It can find right place of .output directoires")
-    return
+-----------------------------------------
+|            efs-pv-porting             |
+-----------------------------------------
+Available OPTIONS:
+    -e / --export       Exporting PV in old cluster
+                        ex) ./run.py -e export_file   // ./run.py --export export_file
+    -i / --import       Importing PV in new cluster
+    -t / --init         Initializing Kubeconfig file. Must place with cluster directory. And It can find right place of .output directoires
+                        ex) ./run.py -t key  // ./run.py --init key
+    -s / --switch       Switching context cluster
+    -h / --help         help
+Usage: ./run.py [OPTIONS] [ARGS]
+''')
     
 def mod_file(args):
     file_name="test/"+args+".yaml"
