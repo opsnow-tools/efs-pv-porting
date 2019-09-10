@@ -99,6 +99,7 @@ def init_context(arg_dir):
     clusters, contexts, users = [], [], []
     new_config = {}
     if os.path.exists(arg_dir):
+        os.remove('key/new-kube-config.yaml')
         file_names = os.listdir(arg_dir)
         for file_name in file_names:
             f = open(arg_dir + "/"+ file_name)
