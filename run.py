@@ -93,26 +93,32 @@ def export_pv(args):
             break
 
 def import_pv():
-    findGenFileCmd = "ls -al test | awk '{print $9}' | sed '1,3d'"
-    findGenFileRes = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-    while True:
-        genFileName = findGenFileRes.stdout.readline()
-        genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
-        if not genFileName:
-            break
-        else:
-            applyPvCmd = "kubectl apply -f test/"+genFileName
-            applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-            print(applyPvRes.stdout.read())
+    res=check_duplicate_pv()
+    if res == 0:
+        findGenFileCmd = "ls -al test | awk '{print $9}' | sed '1,3d'"
+        findGenFileRes = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+        while True:
+            genFileName = findGenFileRes.stdout.readline()
+            genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
+            if not genFileName:
+                break
+            else:
+                applyPvCmd = "kubectl apply -f test/"+genFileName
+                applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+                print(applyPvRes.stdout.read())
+    else:
+        pass
+    
 
 def check_duplicate_pv():
     checkDuplicatePvCmd = "kubectl get pv"
     checkDuplicatePvRes = Popen(checkDuplicatePvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     if 'No' in checkDuplicatePvRes.stdout.read().encode('ascii').replace('\n',''):
-        pass
-    else:
         print(checkDuplicatePvRes.stdout.read())
-        break
+        return 0
+    else:
+        print("There is PV in this cluster, Check this again.")
+        return 1
 
 def check_dir(arg_dir):
     if os.path.exists(arg_dir):
