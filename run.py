@@ -9,11 +9,19 @@ import yaml
 import shutil
 from os.path import expanduser
 
-home=expanduser('~')
-
-
 def help():
-    print("print help usage")
+    print('''
+    -----------------------------------------
+    |            efs-pv-porting             |
+    -----------------------------------------
+    Available OPTIONS:
+        -e / --export
+        -i / --import
+        -t / --init         Setting Kubeconfig file. Must place with cluster directory. And It can find right place of .output directoires
+        -s
+        -h
+    Usage: ./run.py [OPTIONS] [ARGS]
+    ''')
     print("-t / --init option : Must place in cluster directory. And It can find right place of .output directoires")
     return
     
@@ -109,6 +117,7 @@ def init_context(args):
     new_config = {}
     new_config_file = 'key/new-kube-config.yaml'
     arg_dir = 'key'
+    home=expanduser('~')
 
     check_dir(arg_dir)
     for params in os.listdir("../"+args):
@@ -163,7 +172,7 @@ def switch_context():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hsie:t:")
+        opts, args = getopt.getopt(sys.argv[1:], "hsie:t:",["help", "export", "import", "switch", "init"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
