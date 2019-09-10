@@ -117,7 +117,7 @@ def init_context(args):
         # findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         # findDir = findDirRes.stdout.read()
         #shutil.copy2(findDir.replace('\n','')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
-        shutil.copy2('../'+args+params.encode('utf-8')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
+        shutil.copy2('../'+args+'/'+params.encode('utf-8')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
    
     if os.path.exists(new_config_file):
         os.remove(new_config_file)
