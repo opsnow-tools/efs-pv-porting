@@ -111,7 +111,7 @@ def init_context(args):
     arg_dir = 'key'
 
     check_dir(arg_dir)
-    for params in os.listdir(args):
+    for params in os.listdir("../"+args):
         print(params)
     #     findDirCmd = "find -name '"+params.encode('utf-8')+"'"
     #     findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
