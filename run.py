@@ -153,6 +153,7 @@ def main():
         sys.exit(1)
 
     for opt,arg in opts:
+        print(opt)
         result=arg.split(' ')
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+result)
