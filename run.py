@@ -179,7 +179,7 @@ def main():
             if len(args) == 1:
                 init_context(args)
             else:
-                print('Wrong argument... Please check help for using it')
+                print('Wrong argument... Please check help for using it 1')
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
