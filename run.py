@@ -152,16 +152,16 @@ def main():
         help()
         sys.exit(1)
 
-    for opt,args in opts:
+    for opt,result in opts:
         if ( opt == "-e" ) or ( opt == "--export" ):
-            print("export directory = "+args)
-            export_pv(args)
+            print("export directory = "+result)
+            export_pv(result)
         elif ( opt == "-i" ) or ( opt == "--import" ):
-            print("Importing PV... "+args)
+            print("Importing PV... "+result)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
-            init_context(args)            
+            init_context(result)            
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
