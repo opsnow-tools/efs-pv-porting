@@ -145,7 +145,7 @@ def main():
             print("Importing PV... "+args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context(args)
-        elif ( opt == "--t" ) or ( opt == "--init" ):
+        elif ( opt == "-t" ) or ( opt == "--init" ):
             init_context(args)
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
