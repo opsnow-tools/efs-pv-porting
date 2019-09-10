@@ -154,7 +154,6 @@ def switch_context():
     while True:
         getConfig = getKubeConfigRes.stdout.readline()
         getConfig = getConfig.encode('ascii').replace('\n','').replace('"','')
-        print(getCurrentCtx, getConfig)
         if getCurrentCtx == getConfig:
             continue
         else:
@@ -164,7 +163,7 @@ def switch_context():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hse:i:t:")
+        opts, args = getopt.getopt(sys.argv[1:], "hsie:t:")
     except getopt.GetoptError as err:
         print(str(err))
         help()
@@ -176,7 +175,7 @@ def main():
             print("export directory = "+args)
             export_pv(args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
-            print("Importing PV... "+args)
+            print("Importing PV... ")
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
