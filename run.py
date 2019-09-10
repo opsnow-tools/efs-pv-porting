@@ -149,7 +149,7 @@ def switch_context():
 
     getKubeConfigRes = Popen(getKubeConfigCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     getCurrentCtxRes = Popen(getCurrentCtxCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-    getCurrentCtx = getCurrentCtxRes.stdout.read().encode('ascii').repalce('\n','')
+    getCurrentCtx = getCurrentCtxRes.stdout.read().encode('ascii').replace('\n','')
 
     while True:
         getConfig = getKubeConfigRes.stdout.readline()
