@@ -92,7 +92,7 @@ def import_pv():
             p6.stdout.read()
 
 def switch_context(arg_dir):
-    clusters, contexts, users = ([] for i range(3))
+    clusters, contexts, users = [],[],[]
     if os.path.exists(arg_dir):
         file_names = os.listdir(arg_dir)
         for file_name in file_names:
