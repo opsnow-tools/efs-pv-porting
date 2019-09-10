@@ -164,7 +164,7 @@ def switch_context():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hs:e:i:t:")
+        opts, args = getopt.getopt(sys.argv[1:], "hse:i:t:")
     except getopt.GetoptError as err:
         print(str(err))
         help()
