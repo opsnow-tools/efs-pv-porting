@@ -18,8 +18,8 @@ def help():
         -e / --export
         -i / --import
         -t / --init         Setting Kubeconfig file. Must place with cluster directory. And It can find right place of .output directoires
-        -s
-        -h
+        -s / --switch
+        -h / --help
     Usage: ./run.py [OPTIONS] [ARGS]
     ''')
     print("-t / --init option : Must place in cluster directory. And It can find right place of .output directoires")
@@ -105,6 +105,15 @@ def import_pv():
             applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             print(applyPvRes.stdout.read())
 
+def check_duplicate_pv():
+    checkDuplicatePvCmd = "kubectl get pv"
+    checkDuplicatePvRes = Popen(checkDuplicatePvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    if 'No' in checkDuplicatePvRes.stdout.read().encode('ascii').replace('\n','')
+        pass
+    else:
+        print(checkDuplicatePvRes.stdout.read())
+        break
+    
 def check_dir(arg_dir):
     if os.path.exists(arg_dir):
         pass
