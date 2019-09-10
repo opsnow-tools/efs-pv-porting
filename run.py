@@ -160,6 +160,7 @@ def main():
 
     for opt,args in opts:
         #result=args.split(',')
+        print(args)
 
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+args)
