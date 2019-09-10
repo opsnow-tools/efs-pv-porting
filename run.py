@@ -154,7 +154,7 @@ def main():
 
     for opt,arg in opts:
         print(opts)
-        result=arg.split(' ')
+        result=arg.split(',')
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+result)
             export_pv(result)
