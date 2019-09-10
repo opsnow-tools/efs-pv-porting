@@ -34,6 +34,7 @@ Sequences:
 def mod_file(args):
     file_name="test/"+args+".yaml"
     output = []
+
     with open(file_name,'r+t') as f:
         for lines in f:
             # if not 'uid' in lines:
@@ -48,12 +49,9 @@ def mod_file(args):
     f.close()
 
 def export_pv_yaml(arg_pv, arg_file):
-    # print("args = "+arg_pv.replace('\n','').replace('"',''))
-    
     arg_pv=arg_pv.replace('\n','').replace('"','')
     arg_file=arg_file.replace('\n','').replace('"','')
 
-    # genFileCmd = "kubectl get pv -oyaml "+arg_pv+" > ./test/"+arg_file+".yaml"
     f=open("test/"+arg_file+".yaml", 'w')
     out=subprocess.check_output("kubectl get pv -oyaml "+arg_pv, shell=True)
     f.write(out)
@@ -61,6 +59,8 @@ def export_pv_yaml(arg_pv, arg_file):
     mod_file(arg_file)
 
 def export_pv(args):
+    cnt = 0
+    
     # check directory & make directory
     if os.path.exists(args):
         print("Temp directory already exists")
@@ -69,13 +69,9 @@ def export_pv(args):
         print("Temp directory create")
 
     # export PVs to yaml files
-
     statusCmd="kubectl get pv -ojson | jq '.items[].status.phase'"
     statusRes = Popen(statusCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
-    #parsing_pv, parsing_file = [], []
-    #parsing_export, parsing_export_pv, parsing_export_file = dict(), dict(), dict()
-    cnt = 0
     while True:
         cmd_status = statusRes.stdout.readline()
         cmd_status = cmd_status.encode('ascii').replace('\n','').replace('"','')
@@ -99,6 +95,8 @@ def export_pv(args):
             break
 
 def import_pv():
+    arg_dir = 'key'
+
     res=check_duplicate_pv()
     if res == 0:
         findGenFileCmd = "ls -al test | awk '{print $9}' | sed '1,3d'"
@@ -106,12 +104,14 @@ def import_pv():
         while True:
             genFileName = findGenFileRes.stdout.readline()
             genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
-            if not genFileName:
+            if not genFileName:                
+                os.remove(arg_dir)
                 break
             else:
                 applyPvCmd = "kubectl apply -f test/"+genFileName
                 applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
                 print(applyPvRes.stdout.read())
+        
     else:
         pass
     
@@ -136,8 +136,8 @@ def init_context(args):
     # declare variables
     clusters, contexts, users = [], [], []
     new_config = {}
-    new_config_file = 'key/new-kube-config.yaml'
     arg_dir = 'key'
+    new_config_file = arg_dir+'/new-kube-config.yaml'
     home=expanduser('~')
 
     check_dir(arg_dir)
