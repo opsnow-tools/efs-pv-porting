@@ -113,37 +113,37 @@ def init_context(args):
     check_dir(arg_dir)
     for params in os.listdir("../"+args):
         print(params)
-    #     findDirCmd = "find -name '"+params.encode('utf-8')+"'"
-    #     findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-    #     findDir = findDirRes.stdout.read()
-    #     shutil.copy2(findDir+'infra/.output/kube-config.yaml',arg_dir+'/'+params+'-kube-config.yaml')
+        # findDirCmd = "find -name '"+params.encode('utf-8')+"'"
+        # findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+        # findDir = findDirRes.stdout.read()
+        shutil.copy2('../'+arg_dir+'/'+params.encode('utf-8')+'/infra/.output/kube-config.yaml',arg_dir+'/'+params.encode('utf-8')+'-kube-config.yaml')
    
-    # if os.path.exists(new_config_file):
-    #     os.remove(new_config_file)
-    # else:
-    #     pass
+    if os.path.exists(new_config_file):
+        os.remove(new_config_file)
+    else:
+        pass
 
-    # file_names = os.listdir(arg_dir)
-    # for file_name in file_names:
-    #     f = open(arg_dir + "/"+ file_name)
-    #     dataMap = yaml.safe_load(f)
-    #     clusters.append(dataMap['clusters'][0])
-    #     contexts.append(dataMap['contexts'][0])
-    #     users.append(dataMap['users'][0])
-    #     current_ctx = dataMap['current-context']
-    #     f.close()
-    # print(clusters)
-    # print("==================================================================\n")
-    # print(contexts)
-    # print("==================================================================\n")
-    # print(users)
-    # print("==================================================================\n")
-    # new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
-    #         'clusters': clusters, 'contexts': contexts, 'users': users}
+    file_names = os.listdir(arg_dir)
+    for file_name in file_names:
+        f = open(arg_dir + "/"+ file_name)
+        dataMap = yaml.safe_load(f)
+        clusters.append(dataMap['clusters'][0])
+        contexts.append(dataMap['contexts'][0])
+        users.append(dataMap['users'][0])
+        current_ctx = dataMap['current-context']
+        f.close()
+    print(clusters)
+    print("==================================================================\n")
+    print(contexts)
+    print("==================================================================\n")
+    print(users)
+    print("==================================================================\n")
+    new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
+            'clusters': clusters, 'contexts': contexts, 'users': users}
     
-    # with open(new_config_file, 'w') as yaml_file:
-    #     yaml.dump(new_config, yaml_file, default_flow_style=False)
-    # shutil.copy2(new_config_file, home+'/.kube/config')
+    with open(new_config_file, 'w') as yaml_file:
+        yaml.dump(new_config, yaml_file, default_flow_style=False)
+    shutil.copy2(new_config_file, home+'/.kube/config')
 
     
 def switch_context():
