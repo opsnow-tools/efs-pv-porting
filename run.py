@@ -164,20 +164,14 @@ def main():
 
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+args)
-            if len(args) != 1:
-                print('Wrong argument... Please check help for using it')
-            else:
-                export_pv(args)
+            export_pv(args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
-            if len(args) != 1:
-                print('Wrong argument... Please check help for using it')
-            else:
-                print("Importing PV... "+args)
+            print("Importing PV... "+args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
             print(len(args))
-            if len(args) == 1:
+            if len(args) > 0:
                 init_context(args)
             else:
                 print('Wrong argument... Please check help for using it 1')
