@@ -152,7 +152,8 @@ def main():
         help()
         sys.exit(1)
 
-    for opt,result in opts:
+    for opt,args in opts:
+        result=args.split(' ')
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+result)
             export_pv(result)
