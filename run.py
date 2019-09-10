@@ -108,12 +108,12 @@ def import_pv():
 def check_duplicate_pv():
     checkDuplicatePvCmd = "kubectl get pv"
     checkDuplicatePvRes = Popen(checkDuplicatePvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-    if 'No' in checkDuplicatePvRes.stdout.read().encode('ascii').replace('\n','')
+    if 'No' in checkDuplicatePvRes.stdout.read().encode('ascii').replace('\n',''):
         pass
     else:
         print(checkDuplicatePvRes.stdout.read())
         break
-    
+
 def check_dir(arg_dir):
     if os.path.exists(arg_dir):
         pass
