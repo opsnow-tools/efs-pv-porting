@@ -95,7 +95,7 @@ def import_pv():
         else:
             applyPvCmd = "kubectl apply -f "+genFileName
             applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-            applyPvRes.stdout.read()
+            print(applyPvRes.stdout.read())
 
 def check_dir(arg_dir):
     if os.path.exists(arg_dir):
