@@ -93,7 +93,7 @@ def import_pv():
         if not genFileName:
             break
         else:
-            applyPvCmd = "kubectl apply -f "+genFileName
+            applyPvCmd = "kubectl apply -f test/"+genFileName
             applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             print(applyPvRes.stdout.read())
 
