@@ -56,13 +56,13 @@ def export_pv(args):
     # export PVs to yaml files
 
     statusCmd="kubectl get pv -ojson | jq '.items[].status.phase'"
-    p1 = Popen(statusCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    statusRes = Popen(statusCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
     #parsing_pv, parsing_file = [], []
     #parsing_export, parsing_export_pv, parsing_export_file = dict(), dict(), dict()
     cnt = 0
     while True:
-        cmd_status = p1.stdout.readline()
+        cmd_status = statusRes.stdout.readline()
         cmd_status = cmd_status.encode('ascii').replace('\n','').replace('"','')
         if not cmd_status:
             break
@@ -73,28 +73,28 @@ def export_pv(args):
             # pv_name is a base of yaml file.
             # claimRef name use for making file name
             pvNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].metadata.name'"
-            p2 = Popen(pvNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            pvNameRes = Popen(pvNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
             fileNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].spec.claimRef.name'"
-            p3 = Popen(fileNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            fileNameRes = Popen(fileNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
-            export_pv_yaml(p2.stdout.read(), p3.stdout.read())
+            export_pv_yaml(pvNameRes.stdout.read(), fileNameRes.stdout.read())
             cnt+=1
         else:
             break
 
 def import_pv():
     findGenFileCmd = "ls -al test | awk '{print $9}' | sed '1,3d'"
-    p5 = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    findGenFileRes = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
     while True:
-        genFileName = p5.stdout.readline()
+        genFileName = findGenFileRes.stdout.readline()
         genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
         if not genFileName:
             break
         else:
             applyPvCmd = "kubectl apply -f "+genFileName
-            p6 = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-            p6.stdout.read()
+            applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            applyPvRes.stdout.read()
 
 def check_dir(arg_dir):
     if os.path.exists(arg_dir):
@@ -110,34 +110,38 @@ def init_context(args):
     arg_dir = 'key'
 
     check_dir(arg_dir)
-    print(args)
+    for params in args:
+        findDirCmd = "find ./"+params.encode('utf-8')+" -name '.output'"
+        findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+        findDir = findDirRes.stdout.read()
+        shutil.copy2(findDir+'/kube-config.yaml',arg_dir+'/'+params+'-kube-config.yaml')
    
-    # if os.path.exists(new_config_file):
-    #     os.remove(new_config_file)
-    # else:
-    #     pass
+    if os.path.exists(new_config_file):
+        os.remove(new_config_file)
+    else:
+        pass
 
-    # file_names = os.listdir(arg_dir)
-    # for file_name in file_names:
-    #     f = open(arg_dir + "/"+ file_name)
-    #     dataMap = yaml.safe_load(f)
-    #     clusters.append(dataMap['clusters'][0])
-    #     contexts.append(dataMap['contexts'][0])
-    #     users.append(dataMap['users'][0])
-    #     current_ctx = dataMap['current-context']
-    #     f.close()
-    # print(clusters)
-    # print("==================================================================\n")
-    # print(contexts)
-    # print("==================================================================\n")
-    # print(users)
-    # print("==================================================================\n")
-    # new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
-    #         'clusters': clusters, 'contexts': contexts, 'users': users}
+    file_names = os.listdir(arg_dir)
+    for file_name in file_names:
+        f = open(arg_dir + "/"+ file_name)
+        dataMap = yaml.safe_load(f)
+        clusters.append(dataMap['clusters'][0])
+        contexts.append(dataMap['contexts'][0])
+        users.append(dataMap['users'][0])
+        current_ctx = dataMap['current-context']
+        f.close()
+    print(clusters)
+    print("==================================================================\n")
+    print(contexts)
+    print("==================================================================\n")
+    print(users)
+    print("==================================================================\n")
+    new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
+            'clusters': clusters, 'contexts': contexts, 'users': users}
     
-    # with open('key/new-kube-config.yaml','w') as yaml_file:
-    #     yaml.dump(new_config, yaml_file, default_flow_style=False)
-    # shutil.copy2('key/new-kube-config.yaml',home+'/.kube/config')
+    with open(new_config_file, 'w') as yaml_file:
+        yaml.dump(new_config, yaml_file, default_flow_style=False)
+    shutil.copy2(new_config_file, home+'/.kube/config')
 
     
 def switch_context():
@@ -152,18 +156,28 @@ def main():
         help()
         sys.exit(1)
 
-    for opt,arg in opts:
+    for opt,args in opts:
         print(opts)
-        result=arg.split(',')
+        result=args.split(',')
+
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+result)
-            export_pv(result)
+            if len(result) != 1:
+                print('Wrong argument... Please check help for using it')
+            else:
+                export_pv(result)
         elif ( opt == "-i" ) or ( opt == "--import" ):
-            print("Importing PV... "+result)
+            if len(result) != 1:
+                print('Wrong argument... Please check help for using it')
+            else:
+                print("Importing PV... "+result)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
-            init_context(result)            
+            if len(result) == 2:
+                init_context(result)
+            else:
+                print('Wrong argument... Please check help for using it')
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
