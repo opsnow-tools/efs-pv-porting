@@ -176,6 +176,7 @@ def main():
             export_pv(args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV... ")
+            import_pv()
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
