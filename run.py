@@ -92,12 +92,14 @@ def import_pv():
             p6.stdout.read()
 
 def switch_context(arg_dir):
+    clusters, contexts, users = ([] for i range(3))
     if os.path.exists(arg_dir):
         file_names = os.listdir(arg_dir)
         for file_name in file_names:
             f = open(arg_dir + "/"+ file_name)
             dataMap = yaml.safe_load(f)
-            print(dataMap)
+            clusters.append(dataMap['clusters'])
+            print(clusters)
             f.close()
             
 
