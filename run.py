@@ -23,6 +23,12 @@ Available OPTIONS:
     -s / --switch       Switching context cluster
     -h / --help         help
 Usage: ./run.py [OPTIONS] [ARGS]
+
+Sequences:
+    ./run.py -t                 --> Initializing
+    ./run.py -s                 --> Setting old cluster
+    ./run.py -e export_file     --> Export
+    ./run.py -i                 --> Import
 ''')
     
 def mod_file(args):
