@@ -7,6 +7,9 @@ from subprocess import Popen, PIPE, STDOUT
 import subprocess
 import yaml
 import shutil
+from os.path import expanduser
+
+home=expanduser('~')
 
 def help():
     print("print help usage")
@@ -116,7 +119,7 @@ def init_context(arg_dir):
         
         with open('key/new-kube-config.yaml','w') as yaml_file:
             yaml.dump(new_config, yaml_file, default_flow_style=False)
-        shutil.copy2('key/new-kube-config.yaml','~/.kube/config')
+        shutil.copy2('key/new-kube-config.yaml',home+'/.kube/config')
 
                 
 
