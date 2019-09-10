@@ -158,7 +158,7 @@ def switch_context():
             pass
         else:
             getSetCtxRes=Popen(getSetCtxCmd+getConfig, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-            getSetCtxRes.stdout.read()
+            print(getSetCtxRes.stdout.read())
             break
 
 def main():
