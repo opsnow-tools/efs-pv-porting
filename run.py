@@ -98,8 +98,10 @@ def switch_context(arg_dir):
         for file_name in file_names:
             f = open(arg_dir + "/"+ file_name)
             dataMap = yaml.safe_load(f)
-            print(dataMap['clusters'])
-            print(dict(dataMap['clusters']))
+            for entry in dataMap['clusters']:
+                cluster = entry.pop('cluster')
+                clusters[cluster] = entry
+            print(clusters)
             
             f.close()
             
