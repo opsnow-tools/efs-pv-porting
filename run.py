@@ -111,6 +111,7 @@ def init_context(args):
 
     check_dir(arg_dir)
     for params in args:
+        print(params)
         findDirCmd = "find ./"+params.encode('utf-8')+" -name '.output'"
         findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         findDir = findDirRes.stdout.read()
@@ -157,7 +158,6 @@ def main():
         sys.exit(1)
 
     for opt,args in opts:
-        print(opts)
         result=args.split(',')
 
         if ( opt == "-e" ) or ( opt == "--export" ):
