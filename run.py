@@ -109,6 +109,7 @@ def init_context(args):
     new_config = {}
     new_config_file = 'key/new-kube-config.yaml'
     arg_dir = 'key'
+    current_dir = os.path.dirname(os.path.realpath(__file__))
 
     check_dir(arg_dir)
     for params in os.listdir("../"+args):
@@ -116,7 +117,7 @@ def init_context(args):
         # findDirCmd = "find -name '"+params.encode('utf-8')+"'"
         # findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         # findDir = findDirRes.stdout.read()
-        shutil.copy2('../'+args+'/'+params.encode('utf-8')+'/infra/.output/kube-config.yaml',arg_dir+'/'+params.encode('utf-8')+'-kube-config.yaml')
+        shutil.copy2(current_dir + '../'+args+'/'+params.encode('utf-8')+'/infra/.output/kube-config.yaml',arg_dir+'/'+params.encode('utf-8')+'-kube-config.yaml')
    
     if os.path.exists(new_config_file):
         os.remove(new_config_file)
