@@ -155,7 +155,7 @@ def switch_context():
         getConfig = getKubeConfigRes.stdout.readline()
         getConfig = getConfig.encode('ascii').replace('\n','').replace('"','')
         if getCurrentCtx == getConfig:
-            pass
+            continue
         else:
             getSetCtxRes=Popen(getSetCtxCmd+getConfig, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             print(getSetCtxRes.stdout.read())
