@@ -112,10 +112,10 @@ def init_context(args):
     check_dir(arg_dir)
     for params in args:
         print(params)
-        findDirCmd = "find ./"+params.encode('utf-8')+" -name '.output'"
+        findDirCmd = "find / -name '"+params.encode('utf-8')+"'"
         findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         findDir = findDirRes.stdout.read()
-        shutil.copy2(findDir+'/kube-config.yaml',arg_dir+'/'+params+'-kube-config.yaml')
+        shutil.copy2(findDir+'infra/.output/kube-config.yaml',arg_dir+'/'+params+'-kube-config.yaml')
    
     if os.path.exists(new_config_file):
         os.remove(new_config_file)
