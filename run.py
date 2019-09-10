@@ -154,6 +154,7 @@ def switch_context():
     while True:
         getConfig = getKubeConfigRes.stdout.readline()
         getConfig = getConfig.encode('ascii').replace('\n','').replace('"','')
+        print(getCurrentCtx, getConfig)
         if getCurrentCtx == getConfig:
             continue
         else:
