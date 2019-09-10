@@ -112,11 +112,6 @@ def init_context(args):
 
     check_dir(arg_dir)
     for params in os.listdir("../"+args):
-        print(params)
-        # findDirCmd = "find / -name '"+params.encode('utf-8')+"'"
-        # findDirRes = Popen(findDirCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
-        # findDir = findDirRes.stdout.read()
-        #shutil.copy2(findDir.replace('\n','')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
         shutil.copy2('../'+args+'/'+params.encode('utf-8')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
    
     if os.path.exists(new_config_file):
@@ -133,12 +128,12 @@ def init_context(args):
         users.append(dataMap['users'][0])
         current_ctx = dataMap['current-context']
         f.close()
-    print(clusters)
-    print("==================================================================\n")
-    print(contexts)
-    print("==================================================================\n")
-    print(users)
-    print("==================================================================\n")
+    # print(clusters)
+    # print("==================================================================\n")
+    # print(contexts)
+    # print("==================================================================\n")
+    # print(users)
+    # print("==================================================================\n")
     new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
             'clusters': clusters, 'contexts': contexts, 'users': users}
     
@@ -148,6 +143,22 @@ def init_context(args):
 
     
 def switch_context():
+    getKubeConfigCmd = "kubectl config view -ojson | jq '.contexts[].name'"
+    getCurrentCtxCmd = "kubectl config current-context"
+    getSetCtxCmd = "kubectl config use-context "
+
+    getKubeConfigRes = Popen(getKubeConfigCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    getCurrentCtxRes = Popen(getCurrentCtxCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+    getCurrentCtx = getCurrentCtxRes.stdout.read()
+
+    while True:
+        getConfig = getKubeConfigRes.stdout.readline()
+        getConfig = getConfig.encode('ascii').replace('\n','').replace('"','')
+        if getCurrentCtx == getConfig:
+            pass
+        else:
+            getSetCtxRes=Popen(getSetCtxCmd+getConfig, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
+            getSetCtxRes.stdout.read()
 
     return
 
@@ -169,7 +180,6 @@ def main():
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
-            print(len(args))
             if len(args) > 0:
                 init_context(args)
             else:
