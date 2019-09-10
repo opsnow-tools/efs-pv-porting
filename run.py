@@ -176,6 +176,7 @@ def main():
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
+            print(len(args))
             if len(args) == 1:
                 init_context(args)
             else:
