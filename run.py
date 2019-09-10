@@ -124,7 +124,10 @@ def init_context(arg_dir):
             #    print(ex)
     else:
         os.mkdir(arg_dir)
-        print("One more time")   
+        print("One more time")
+
+def switch_context(args):
+    return
 
 def main():
     try:
