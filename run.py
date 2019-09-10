@@ -6,6 +6,7 @@ import getopt
 from subprocess import Popen, PIPE, STDOUT
 import subprocess
 import yaml
+import shutil
 
 def help():
     print("print help usage")
@@ -91,8 +92,9 @@ def import_pv():
             p6 = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
             p6.stdout.read()
 
-def switch_context(arg_dir):
+def init_context(arg_dir):
     clusters, contexts, users = [], [], []
+    new_config = {}
     if os.path.exists(arg_dir):
         file_names = os.listdir(arg_dir)
         for file_name in file_names:
@@ -101,7 +103,7 @@ def switch_context(arg_dir):
             clusters.append(dataMap['clusters'][0])
             contexts.append(dataMap['contexts'][0])
             users.append(dataMap['users'][0])
-            
+            current_ctx = dataMap['current-context']
             f.close()
         print(clusters)
         print("==================================================================\n")
@@ -109,8 +111,14 @@ def switch_context(arg_dir):
         print("==================================================================\n")
         print(users)
         print("==================================================================\n")
-        print(dataMap)
-            
+        new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
+                'clusters': clusters, 'contexts': contexts, 'users': users}
+        
+        with open('key/new-kube-config.yaml','w') as yaml_file:
+            yaml.dump(new_config, yaml_file, default_flow_style=False)
+        shutil.copy2('key/new-kube-config.yaml','~/.kube/config')
+
+                
 
             #for ex in example:
             #    print(ex)
@@ -134,6 +142,8 @@ def main():
             print("Importing PV... "+args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context(args)
+        elif ( opt == "--t" ) or ( opt == "--init" ):
+            init_context(args)
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
