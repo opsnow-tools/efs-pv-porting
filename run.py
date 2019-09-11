@@ -29,7 +29,7 @@ Sequences:
     ./run.py -t test-cluster    --> Initializing
     ./run.py -s                 --> Setting old cluster
     ./run.py -e export_file     --> Export
-    ./run.py -i                 --> Import
+    ./run.py -i export_file     --> Import
 ''')
     
 def mod_file(args):
