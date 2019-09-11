@@ -178,7 +178,8 @@ def init_context(args):
     with open(new_config_file, 'w') as yaml_file:
         yaml.dump(new_config, yaml_file, default_flow_style=False)
 
-    shutil.copy2(home+'/.kube/config', home+'/.kube/config-backup-efspvporting-'+int(time.time()))
+    time-utc=time.time()
+    shutil.copy2(home+'/.kube/config', home+'/.kube/config-backup-efspvporting-'+int(time-utc))
     shutil.copy2(new_config_file, home+'/.kube/config')
 
     
