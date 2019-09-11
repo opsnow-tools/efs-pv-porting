@@ -20,13 +20,13 @@ Available OPTIONS:
                         ex) ./run.py -e export_file   // ./run.py --export export_file
     -i / --import       Importing PV in new cluster
     -t / --init         Initializing Kubeconfig file. Must place with cluster directory. And It can find right place of .output directoires
-                        ex) ./run.py -t key  // ./run.py --init key
+                        ex) ./run.py -t test-cluster  // ./run.py --init test-cluster
     -s / --switch       Switching context cluster
     -h / --help         help
 Usage: ./run.py [OPTIONS] [ARGS]
 
 Sequences:
-    ./run.py -t                 --> Initializing
+    ./run.py -t test-cluster    --> Initializing
     ./run.py -s                 --> Setting old cluster
     ./run.py -e export_file     --> Export
     ./run.py -i                 --> Import
