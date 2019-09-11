@@ -149,14 +149,18 @@ def init_context(args):
     home=expanduser('~')
 
     check_dir(arg_dir)
+    print("Copy kubernetes configs")
     for params in os.listdir("../"+args):
         shutil.copy2('../'+args+'/'+params.encode('utf-8')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
-   
+    
+    print("Done...")
+
     if os.path.exists(new_config_file):
         os.remove(new_config_file)
     else:
         pass
 
+    print("Generate new kubernetes config")
     file_names = os.listdir(arg_dir)
     for file_name in file_names:
         f = open(arg_dir + "/"+ file_name)
@@ -174,14 +178,15 @@ def init_context(args):
     # print("==================================================================\n")
     new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
             'clusters': clusters, 'contexts': contexts, 'users': users}
-    
+    print("Done...")
+
     with open(new_config_file, 'w') as yaml_file:
         yaml.dump(new_config, yaml_file, default_flow_style=False)
 
     now = datetime.datetime.utcnow().strftime('%s')
     shutil.copy2(home+'/.kube/config', home+'/.kube/config-backup-efspvporting-'+str(now))
     shutil.copy2(new_config_file, home+'/.kube/config')
-
+    print("Copy new kubernetes config to .kube directory")
     
 def switch_context():
     getKubeConfigCmd = "kubectl config view -ojson | jq '.contexts[].name'"
