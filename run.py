@@ -104,6 +104,7 @@ def import_pv(args):
         findGenFileRes = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         while True:
             genFileName = findGenFileRes.stdout.readline()
+            print(genFileName)
             genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
             if not genFileName:                
                 try:
