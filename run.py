@@ -32,8 +32,8 @@ Sequences:
     ./run.py -i export_file     --> Import
 ''')
     
-def mod_file(args):
-    file_name="test/"+args+".yaml"
+def mod_file(dir_arg, args):
+    file_name=dir_arg+"/"+args+".yaml"
     output = []
 
     with open(file_name,'r+t') as f:
@@ -49,15 +49,15 @@ def mod_file(args):
     f.writelines(output)
     f.close()
 
-def export_pv_yaml(arg_pv, arg_file):
+def export_pv_yaml(dir_arg, arg_pv, arg_file):
     arg_pv=arg_pv.replace('\n','').replace('"','')
     arg_file=arg_file.replace('\n','').replace('"','')
 
-    f=open("test/"+arg_file+".yaml", 'w')
+    f=open(dir_arg+"/"+arg_file+".yaml", 'w')
     out=subprocess.check_output("kubectl get pv -oyaml "+arg_pv, shell=True)
     f.write(out)
     f.close()
-    mod_file(arg_file)
+    mod_file(dir_arg, arg_file)
 
 def export_pv(args):
     cnt = 0
@@ -90,7 +90,7 @@ def export_pv(args):
             fileNameCmd = "kubectl get pv -ojson | jq '.items["+str(cnt)+"].spec.claimRef.name'"
             fileNameRes = Popen(fileNameCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
 
-            export_pv_yaml(pvNameRes.stdout.read(), fileNameRes.stdout.read())
+            export_pv_yaml(args, pvNameRes.stdout.read(), fileNameRes.stdout.read())
             cnt+=1
         else:
             break
@@ -117,7 +117,7 @@ def import_pv(args):
                         raise
                 break
             else:
-                applyPvCmd = "kubectl apply -f test/"+genFileName
+                applyPvCmd = "kubectl apply -f "+args+"/"+genFileName
                 applyPvRes = Popen(applyPvCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
                 print(applyPvRes.stdout.read())
         
