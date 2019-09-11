@@ -152,8 +152,6 @@ def init_context(args):
     print("Copy kubernetes configs")
     for params in os.listdir("../"+args):
         shutil.copy2('../'+args+'/'+params.encode('utf-8')+'/infra/.output/kube_config.yaml',arg_dir+'/'+params.encode('utf-8')+'_kube_config.yaml')
-    
-    print("Done...")
 
     if os.path.exists(new_config_file):
         os.remove(new_config_file)
@@ -178,7 +176,6 @@ def init_context(args):
     # print("==================================================================\n")
     new_config = {'kind': 'Config', 'preferences': {}, 'current-context':current_ctx, 
             'clusters': clusters, 'contexts': contexts, 'users': users}
-    print("Done...")
 
     with open(new_config_file, 'w') as yaml_file:
         yaml.dump(new_config, yaml_file, default_flow_style=False)
