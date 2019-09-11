@@ -60,7 +60,7 @@ def export_pv_yaml(arg_pv, arg_file):
 
 def export_pv(args):
     cnt = 0
-    
+
     # check directory & make directory
     if os.path.exists(args):
         print("Temp directory already exists")
@@ -105,7 +105,14 @@ def import_pv():
             genFileName = findGenFileRes.stdout.readline()
             genFileName = genFileName.encode('ascii').replace('\n','').replace('"','')
             if not genFileName:                
-                os.remove(arg_dir)
+                try:
+                    shutil.rmtree(arg_dir)
+                except OSError as e:
+                    if e.errno == 2:
+                        print "No such file or directory to remove"
+                        pass
+                    else:
+                        raise
                 break
             else:
                 applyPvCmd = "kubectl apply -f test/"+genFileName
