@@ -7,7 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 import subprocess
 import yaml
 import shutil
-import time
+import datetime
 from os.path import expanduser
 
 def help():
@@ -178,8 +178,8 @@ def init_context(args):
     with open(new_config_file, 'w') as yaml_file:
         yaml.dump(new_config, yaml_file, default_flow_style=False)
 
-    time-utc=time.time()
-    shutil.copy2(home+'/.kube/config', home+'/.kube/config-backup-efspvporting-'+int(time-utc))
+    now = datetime.datetime.utcnow()
+    shutil.copy2(home+'/.kube/config', home+'/.kube/config-backup-efspvporting-'+str(now))
     shutil.copy2(new_config_file, home+'/.kube/config')
 
     
