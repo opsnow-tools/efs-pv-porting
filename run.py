@@ -28,7 +28,7 @@ Usage: ./run.py [OPTIONS] [ARGS]
 Sequences:
     ./run.py -t test-cluster    --> Initializing
     ./run.py -e export_file     --> Export
-    ./run.py -s                 --> Setting old cluster
+    ./run.py -s                 --> Switching cluster
     ./run.py -i export_file     --> Import
 ''')
     
