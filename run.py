@@ -95,12 +95,12 @@ def export_pv(args):
         else:
             break
 
-def import_pv():
+def import_pv(args):
     arg_dir = 'key'
 
     res=check_duplicate_pv()
     if res == 0:
-        findGenFileCmd = "ls -al test | awk '{print $9}' | sed '1,3d'"
+        findGenFileCmd = "ls -al "+args+" | awk '{print $9}' | sed '1,3d'"
         findGenFileRes = Popen(findGenFileCmd, shell=True, stdin=PIPE, stdout=PIPE, stderr=STDOUT, close_fds=True)
         while True:
             genFileName = findGenFileRes.stdout.readline()
@@ -204,7 +204,7 @@ def switch_context():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hsie:t:",["help", "export", "import", "switch", "init"])
+        opts, args = getopt.getopt(sys.argv[1:], "hsi:e:t:",["help", "export", "import", "switch", "init"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
@@ -217,7 +217,7 @@ def main():
             export_pv(args)
         elif ( opt == "-i" ) or ( opt == "--import" ):
             print("Importing PV... ")
-            import_pv()
+            import_pv(args)
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
