@@ -7,6 +7,7 @@ from subprocess import Popen, PIPE, STDOUT
 import subprocess
 import yaml
 import shutil
+import time
 from os.path import expanduser
 
 def help():
@@ -109,7 +110,7 @@ def import_pv():
                     shutil.rmtree(arg_dir)
                 except OSError as e:
                     if e.errno == 2:
-                        print "No such file or directory to remove"
+                        print("No such file or directory to remove")
                         pass
                     else:
                         raise
@@ -176,6 +177,8 @@ def init_context(args):
     
     with open(new_config_file, 'w') as yaml_file:
         yaml.dump(new_config, yaml_file, default_flow_style=False)
+
+    shutil.copy2(home+'/.kube/config', home+'/.kube/config-backup-efspvporting-'+time.time().partition('.'))
     shutil.copy2(new_config_file, home+'/.kube/config')
 
     
