@@ -220,8 +220,11 @@ def main():
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
-            if os.path.isdir('../'+args)
-                init_context(args)
+            if len(args) > 0:
+                if os.path.isdir('../'+args):
+                    init_context(args)
+                else:
+                    print('There is no directory in here')
             else:
                 print('There is no directory in here')
         elif ( opt == "-a" ) or ( opt == "--all" ):
