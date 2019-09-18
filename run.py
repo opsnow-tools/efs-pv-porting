@@ -226,7 +226,7 @@ def main():
                 else:
                     print('There is no directory in here')
             else:
-                print('There is no directory in here')
+                print('There is no directory in here 1')
         elif ( opt == "-a" ) or ( opt == "--all" ):
             all_in_one(args)
         elif ( opt == "-h" ) or ( opt == "--help" ):
