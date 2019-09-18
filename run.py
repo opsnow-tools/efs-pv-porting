@@ -204,14 +204,13 @@ def switch_context():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hsi:e:t:",["help", "export", "import", "switch", "init"])
+        opts, args = getopt.getopt(sys.argv[1:], "hasi:e:t:",["help", "export", "import", "switch", "init", "all"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
         sys.exit(1)
 
     for opt,args in opts:
-        #result=args.split(',')
         if ( opt == "-e" ) or ( opt == "--export" ):
             print("export directory = "+args)
             export_pv(args)
@@ -221,10 +220,12 @@ def main():
         elif ( opt == "-s" ) or ( opt == "--switch" ):
             switch_context()
         elif ( opt == "-t" ) or ( opt == "--init" ):
-            if len(args) > 0:
+            if os.path.isdir('../'+args)
                 init_context(args)
             else:
-                print('Wrong argument... Please check help for using it 1')
+                print('There is no directory in here')
+        elif ( opt == "-a" ) or ( opt == "--all" ):
+            all_in_one(args)
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
