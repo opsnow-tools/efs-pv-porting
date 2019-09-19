@@ -205,9 +205,9 @@ def switch_context():
 def all_in_one(args):
     ex_dir = 'export_file'
     init_context(args)
-    import_pv(ex_dir)
-    switch_context()
     export_pv(ex_dir)
+    switch_context()
+    import_pv(ex_dir)
     return
 
 def main():
