@@ -212,7 +212,7 @@ def all_in_one(args):
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hasi:e:t:",["help", "export", "import", "switch", "init", "all"])
+        opts, args = getopt.getopt(sys.argv[1:], "hsa:i:e:t:",["help", "export", "import", "switch", "init", "all"])
     except getopt.GetoptError as err:
         print(str(err))
         help()
