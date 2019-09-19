@@ -16,6 +16,7 @@ def help():
 |            efs-pv-porting             |
 -----------------------------------------
 Available OPTIONS:
+    -a / --all
     -e / --export       Exporting PV in old cluster
                         ex) ./run.py -e export_file   // ./run.py --export export_file
     -i / --import       Importing PV in new cluster
@@ -212,7 +213,7 @@ def all_in_one(args):
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "hsa:i:e:t:",["help", "export", "import", "switch", "init", "all"])
+        opts, args = getopt.getopt(sys.argv[1:], "hsa:i:e:t:",["help", "export=", "import=", "switch", "init=", "all="])
     except getopt.GetoptError as err:
         print(str(err))
         help()
