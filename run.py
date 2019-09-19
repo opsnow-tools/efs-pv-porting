@@ -202,6 +202,14 @@ def switch_context():
             print(getSetCtxRes.stdout.read())
             break
 
+def all_in_one(args):
+    ex_dir = 'export_file'
+    init_context(args)
+    import_pv(ex_dir)
+    switch_context()
+    export_pv(ex_dir)
+    return
+
 def main():
     try:
         opts, args = getopt.getopt(sys.argv[1:], "hasi:e:t:",["help", "export", "import", "switch", "init", "all"])
@@ -225,7 +233,10 @@ def main():
             else:
                 print('There is no directory in here')
         elif ( opt == "-a" ) or ( opt == "--all" ):
-            all_in_one(args)
+            if os.path.isdir('../'+args):
+                all_in_one(args)
+            else:
+                print('There is no directory in here')
         elif ( opt == "-h" ) or ( opt == "--help" ):
             help()
     return
