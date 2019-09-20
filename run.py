@@ -16,7 +16,7 @@ def help():
 |            efs-pv-porting             |
 -----------------------------------------
 Available OPTIONS:
-    -a / --all
+    -a / --all          all-in-one command! If it has multi cluster, then efs-pv-porting should import PV's in every cluster.
     -e / --export       Exporting PV in old cluster
                         ex) ./run.py -e export_file   // ./run.py --export export_file
     -i / --import       Importing PV in new cluster
@@ -26,6 +26,10 @@ Available OPTIONS:
     -h / --help         help
 Usage: ./run.py [OPTIONS] [ARGS]
 
+All-in-one:
+    ./run.py -a test-cluster    --> Only one command
+or
+    ./run.py --all test-cluster --> Only one command
 Sequences:
     ./run.py -t test-cluster    --> Initializing
     ./run.py -e export_file     --> Export
